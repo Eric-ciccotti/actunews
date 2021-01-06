@@ -2,12 +2,19 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource(
+ *     attributes={
+ *          "pagination_items_per_page"=10,
+ *          "order"={"updatedAt"="DESC"}
+ *     }
+ * ))
  * @ORM\Entity(repositoryClass=PostRepository::class)
  */
 class Post

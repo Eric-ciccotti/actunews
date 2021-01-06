@@ -9,7 +9,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     attributes={
+ *          "pagination_items_per_page"=5
+ *     }
+ * )
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  */
 class Category
