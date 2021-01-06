@@ -7,12 +7,18 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     errorPath="email",
+ *     message="Ce compte existe déja avec cet email"
+ * )
  */
 class User implements UserInterface
 {
@@ -24,7 +30,9 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @Assert\Length(max="180", maxMessage="Attention, pas de plus de 180 caractères")
+     * @Assert\Length(max="180", maxMessage="Attention, pas de plus de 180 caractères.")
+     * @Assert\Email(message="Vérifiez le format de votre email")
+     * @Assert\NotBlank(message="N'oubliez pas votre email.")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -36,6 +44,8 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
+     * @Assert\NotBlank(message="N'oubliez pas votre email.")
+     * @Assert\NotCompromisedPassword(message="Attention, ce mot de passe n'est pas sécurisé.")
      * @ORM\Column(type="string")
      */
     private $password;
@@ -53,6 +63,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max="90", maxMessage="Attention, pas plus de 90 caractères.")
+     * @Assert\NotBlank(message="N'oubliez pas votre nom.")
+     * @ORM\Column(type="string", length=90)
      */
     private $firstname;
 
