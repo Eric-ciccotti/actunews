@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -23,6 +24,7 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\Length(max="180", maxMessage="Attention, pas de plus de 180 caractères")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
